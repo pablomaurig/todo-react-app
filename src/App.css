@@ -26,6 +26,7 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  width: 100%;
 }
 
 .App-link {
@@ -156,5 +157,10 @@ main {
   align-items: center;
 }
 .count-container h3 {
-  width: 200px;
+  width: 80px;
+}
+@media screen and (min-width: 450px) {
+  .count-container h3 {
+    width: 200px;
+  }
 }
