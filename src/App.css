@@ -155,3 +155,6 @@ main {
   justify-content: space-around;
   align-items: center;
 }
+.count-container h3 {
+  width: 200px;
+}
