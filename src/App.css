@@ -1,9 +1,16 @@
 .App {
   text-align: center;
+  min-height: 100vh;
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1rem;
+  color: white;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 2rem;
   pointer-events: none;
 }
 
@@ -14,14 +21,11 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 1rem;
 }
 
 .App-link {
@@ -35,4 +39,67 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+main {
+  width: 90%;
+}
+
+@media screen and (min-width: 1000px) {
+  main {
+    max-width: 800px;
+  }
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.02);
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.task > div {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.task .details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+  padding-left: 2rem;
+}
+
+.task input {
+  font-size: 3rem;
+}
+.task button {
+  background-color: #282c34;
+  border: none;
+  border-radius: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.task button:hover {
+  background-color: #191b1f;
+}
+.task .delete {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.title {
+  margin-bottom: 1rem;
+}
+
+.newTask {
+  margin-bottom: 3rem;
 }
