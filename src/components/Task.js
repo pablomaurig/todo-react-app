@@ -1,5 +1,5 @@
 import React from "react";
-import trash from "../../src/trash.svg";
+import trash from "../../src/images/trash.svg";
 
 const Task = ({ title, description, checked, handleDelete, handleChek }) => {
   // const handleEdit = () => {};

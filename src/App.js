@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import NewTask from "./components/NewTask";
 import Task from "./components/Task";
@@ -7,20 +7,26 @@ import "./App.css";
 const INITIAL_STATE = [
   {
     id: 1,
-    title: "task one",
-    description: "description one",
+    title: "Sacar al perro",
+    description: "Dos veces al día",
     checked: true,
   },
   {
     id: 2,
-    title: "task two",
-    description: "description two",
+    title: "Darle de comer al perro",
+    description: "Una vez al día",
     checked: false,
   },
   {
     id: 3,
-    title: "task three",
-    description: "description three",
+    title: "Lavar al auto",
+    description: "Cada quince días",
+    checked: false,
+  },
+  {
+    id: 4,
+    title: "Hacer ejercicios de NT2",
+    description: "Cuando se pueda",
     checked: false,
   },
 ];
@@ -28,6 +34,10 @@ const INITIAL_STATE = [
 function App() {
   const [tasksList, setTasksList] = useState(INITIAL_STATE);
   const [createNew, setCreateNew] = useState(false);
+  const [totalCount, setTotalCount] = useState(() => tasksList.length);
+  const [doneCount, setDoneCount] = useState(
+    () => tasksList.filter((task) => task.checked === true).length
+  );
   console.log(tasksList);
 
   const handleNewTask = () => {
@@ -67,6 +77,12 @@ function App() {
   const handleDeleteTask = (id) => {
     setTasksList(tasksList.filter((task) => task.id !== id));
   };
+
+  useEffect(() => {
+    setTotalCount(tasksList.length);
+    setDoneCount(tasksList.filter((task) => task.checked === true).length);
+  }, [tasksList]);
+
   return (
     <div className="App">
       <Header />
@@ -74,24 +90,40 @@ function App() {
         {createNew ? (
           <NewTask onSave={handleSave} onCancel={handleCancel} />
         ) : (
-          <button onClick={handleNewTask}>Add new task</button>
+          <div className="count-container">
+            <h3>
+              Total tasks: <b>{totalCount}</b>
+            </h3>
+            <button className="button" onClick={handleNewTask}>
+              Add new task
+            </button>
+            <h3>
+              Completed tasks: <b>{doneCount}</b>
+            </h3>
+          </div>
         )}
-        <div>
-          <h2 className="title">My tasks</h2>
-          {tasksList
-            .slice(0)
-            .reverse()
-            .map((task) => (
-              <Task
-                key={task.id}
-                id={task.id}
-                title={task.title}
-                description={task.description}
-                checked={task.checked}
-                handleChek={() => handleCkeck(task.id)}
-                handleDelete={() => handleDeleteTask(task.id)}
-              />
-            ))}
+        <div className="container">
+          {tasksList.length > 0 ? (
+            <>
+              <h2 className="title">My tasks</h2>
+              {tasksList
+                .slice(0)
+                .reverse()
+                .map((task) => (
+                  <Task
+                    key={task.id}
+                    id={task.id}
+                    title={task.title}
+                    description={task.description}
+                    checked={task.checked}
+                    handleChek={() => handleCkeck(task.id)}
+                    handleDelete={() => handleDeleteTask(task.id)}
+                  />
+                ))}
+            </>
+          ) : (
+            !createNew && <h2 className="title">Please, create a task</h2>
+          )}
         </div>
       </main>
     </div>
