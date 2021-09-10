@@ -88,11 +88,12 @@ main {
   align-items: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-left: 0.5rem;
 }
 .task button:hover {
   background-color: hsl(193deg 95% 40%);
 }
-.task .delete {
+.task .icon {
   width: 1.3rem;
   height: 1.3rem;
 }

@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-const NewTask = ({ onSave, onCancel }) => {
-  const [task, setTask] = useState({});
-
-  useEffect(() => {
-    setTask({});
-  }, []);
+const NewTask = ({ onSave, onCancel, taskToEdit }) => {
+  const [task, setTask] = useState(taskToEdit);
 
   return (
     <div className="newTask">
@@ -15,16 +11,15 @@ const NewTask = ({ onSave, onCancel }) => {
           className="form-control"
           type="text"
           onChange={(e) => setTask({ ...task, title: e.target.value })}
-          value={task.title}
+          value={task.title ? task.title : ""}
         />
       </div>
       <div className="form-group">
         <textarea
           className="form-control"
+          defaultValue={task.description ? task.description : ""}
           onChange={(e) => setTask({ ...task, description: e.target.value })}
-        >
-          {task.description}
-        </textarea>
+        />
       </div>
       <button className="button" onClick={() => onSave(task)}>
         Save

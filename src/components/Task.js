@@ -1,7 +1,15 @@
 import React from "react";
 import trash from "../../src/images/trash.svg";
+import edit from "../../src/images/edit.svg";
 
-const Task = ({ title, description, checked, handleDelete, handleChek }) => {
+const Task = ({
+  title,
+  description,
+  checked,
+  handleDelete,
+  handleChek,
+  handleEdit,
+}) => {
   // const handleEdit = () => {};
   return (
     <div className="task">
@@ -16,9 +24,14 @@ const Task = ({ title, description, checked, handleDelete, handleChek }) => {
           <p>{description}</p>
         </div>
       </div>
-      <button onClick={handleDelete}>
-        <img src={trash} className="delete" alt="delete" />
-      </button>
+      <div>
+        <button onClick={handleEdit} title="edit">
+          <img src={edit} className="icon" alt="edit" />
+        </button>
+        <button onClick={handleDelete} title="delete">
+          <img src={trash} className="icon" alt="delete" />
+        </button>
+      </div>
     </div>
   );
 };

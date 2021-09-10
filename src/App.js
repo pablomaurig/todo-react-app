@@ -33,22 +33,37 @@ const INITIAL_STATE = [
 
 function App() {
   const [tasksList, setTasksList] = useState(INITIAL_STATE);
+  const [newTasks, setNewTasks] = useState({});
   const [createNew, setCreateNew] = useState(false);
   const [totalCount, setTotalCount] = useState(() => tasksList.length);
   const [doneCount, setDoneCount] = useState(
     () => tasksList.filter((task) => task.checked === true).length
   );
-  console.log(tasksList);
 
   const handleNewTask = () => {
     setCreateNew(true);
   };
   const handleCancel = () => {
     setCreateNew(false);
+    setNewTasks({});
   };
   const handleSave = (task) => {
-    const { title, description } = task;
-    if (title || description) {
+    const { title, description, id } = task;
+    if (id) {
+      const newTasksList = tasksList.map((oldTask) => {
+        if (oldTask.id === id) {
+          const updatedTask = {
+            ...oldTask,
+            title,
+            description,
+          };
+          return updatedTask;
+        }
+        return oldTask;
+      });
+
+      setTasksList(newTasksList);
+    } else {
       const id =
         tasksList.length > 0 ? Math.max(...tasksList.map((t) => t.id)) + 1 : 1;
       const newTask = {
@@ -59,6 +74,7 @@ function App() {
       setTasksList([...tasksList, newTask]);
     }
     setCreateNew(false);
+    setNewTasks({});
   };
   const handleCkeck = (id) => {
     const newTasksList = tasksList.map((task) => {
@@ -77,6 +93,10 @@ function App() {
   const handleDeleteTask = (id) => {
     setTasksList(tasksList.filter((task) => task.id !== id));
   };
+  const handleEditTask = (id) => {
+    setNewTasks(tasksList.find((task) => task.id === id));
+    setCreateNew(true);
+  };
 
   useEffect(() => {
     setTotalCount(tasksList.length);
@@ -88,7 +108,11 @@ function App() {
       <Header />
       <main>
         {createNew ? (
-          <NewTask onSave={handleSave} onCancel={handleCancel} />
+          <NewTask
+            taskToEdit={newTasks}
+            onSave={handleSave}
+            onCancel={handleCancel}
+          />
         ) : (
           <div className="count-container">
             <h3>
@@ -117,6 +141,7 @@ function App() {
                     description={task.description}
                     checked={task.checked}
                     handleChek={() => handleCkeck(task.id)}
+                    handleEdit={() => handleEditTask(task.id)}
                     handleDelete={() => handleDeleteTask(task.id)}
                   />
                 ))}
