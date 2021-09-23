@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "./components/Header";
 import NewTask from "./components/NewTask";
 import Task from "./components/Task";
@@ -35,10 +35,8 @@ function App() {
   const [tasksList, setTasksList] = useState(INITIAL_STATE);
   const [newTasks, setNewTasks] = useState({});
   const [createNew, setCreateNew] = useState(false);
-  const [totalCount, setTotalCount] = useState(() => tasksList.length);
-  const [doneCount, setDoneCount] = useState(
-    () => tasksList.filter((task) => task.checked === true).length
-  );
+
+  const uncompletedCount = tasksList.filter((task) => !task.checked).length;
 
   const handleNewTask = () => {
     setCreateNew(true);
@@ -98,11 +96,6 @@ function App() {
     setCreateNew(true);
   };
 
-  useEffect(() => {
-    setTotalCount(tasksList.length);
-    setDoneCount(tasksList.filter((task) => task.checked === true).length);
-  }, [tasksList]);
-
   return (
     <div className="App">
       <Header />
@@ -116,13 +109,13 @@ function App() {
         ) : (
           <div className="count-container">
             <h3>
-              Total tasks: <b>{totalCount}</b>
+              Total tasks: <b>{tasksList.length}</b>
             </h3>
             <button className="button" onClick={handleNewTask}>
               Add new task
             </button>
             <h3>
-              Completed tasks: <b>{doneCount}</b>
+              Uncompleted tasks: <b>{uncompletedCount}</b>
             </h3>
           </div>
         )}
